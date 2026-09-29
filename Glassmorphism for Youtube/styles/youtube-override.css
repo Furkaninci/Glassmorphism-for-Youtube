@@ -1,0 +1,251 @@
+:root {
+  --glass-bg: rgba(255, 255, 255, 0.12);
+  --glass-bg-strong: rgba(255, 255, 255, 0.22);
+  --glass-blur: 16px;
+  --glass-blur-soft: 10px;
+  --glass-border: 1px solid rgba(255, 255, 255, 0.28);
+  --glass-border-soft: 1px solid rgba(255, 255, 255, 0.16);
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  --glass-radius: 18px;
+  --glass-radius-sm: 12px;
+  --glass-transition: all 0.25s ease-in-out;
+  --glass-menu-bg: rgba(28, 28, 30, 0.55);
+  --glass-masthead-bg: rgba(15, 15, 15, 0.45);
+}
+
+html[dark] {
+  --glass-bg: rgba(30, 30, 30, 0.35);
+  --glass-bg-strong: rgba(40, 40, 40, 0.45);
+  --glass-border: 1px solid rgba(255, 255, 255, 0.12);
+  --glass-border-soft: 1px solid rgba(255, 255, 255, 0.08);
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+html:not([dark]) {
+  --glass-masthead-bg: rgba(255, 255, 255, 0.55);
+}
+
+/* 
+   search box
+    */
+#search-form {
+  background: var(--glass-bg) !important;
+  backdrop-filter: blur(var(--glass-blur)) !important;
+  -webkit-backdrop-filter: blur(var(--glass-blur)) !important;
+  border: var(--glass-border) !important;
+  border-radius: var(--glass-radius) !important;
+  box-shadow: var(--glass-shadow) !important;
+  transition: var(--glass-transition);
+  overflow: hidden;
+}
+
+#search-form:focus-within {
+  background: var(--glass-bg-strong) !important;
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.25), var(--glass-shadow) !important;
+}
+
+#container.ytd-searchbox,
+input#search,
+#search-icon-legacy {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+input#search {
+  color: inherit !important;
+  outline: none !important;
+}
+
+/* masthead */
+#masthead-container {
+  background: var(--glass-masthead-bg) !important;
+  backdrop-filter: blur(var(--glass-blur)) !important;
+  -webkit-backdrop-filter: blur(var(--glass-blur)) !important;
+  border-bottom: var(--glass-border-soft) !important;
+  box-shadow: var(--glass-shadow) !important;
+}
+
+body:not(:has(ytd-watch-flexy:not([hidden]))) #masthead-container {
+  background: var(--glass-menu-bg) !important;
+}
+
+html:not([dark]) #masthead-container #start,
+html:not([dark]) ytd-masthead #start,
+html:not([dark]) ytd-topbar-logo-renderer {
+  background: linear-gradient(
+    to right,
+    #ffffff 0%,
+    #ffffff 75%,
+    rgba(255, 255, 255, 0) 100%
+  ) !important;
+}
+
+/* page manager */
+ytd-page-manager#page-manager:not(:has(ytd-watch-flexy:not([hidden]))) { 
+  margin-left: 88px !important;
+}
+
+ytd-page-manager#page-manager:has(ytd-watch-flexy:not([hidden])),
+html:fullscreen ytd-page-manager#page-manager {
+  margin-left: 0 !important;
+}
+
+/* mini guide */
+ytd-mini-guide-renderer {
+  position: fixed !important;
+  top: 76px !important;
+  left: 12px !important;
+  height: fit-content !important;
+  max-height: calc(100vh - 88px) !important;
+  background: var(--glass-menu-bg) !important;
+  backdrop-filter: blur(var(--glass-blur-soft)) !important;
+  -webkit-backdrop-filter: blur(var(--glass-blur-soft)) !important;
+  border: var(--glass-border) !important;
+  border-radius: var(--glass-radius) !important;
+  box-shadow: var(--glass-shadow) !important;
+  overflow-y: auto !important;
+  padding: 4px !important;
+  z-index: 2147483647 !important;
+}
+
+tp-yt-app-drawer#guide[opened] ~ ytd-mini-guide-renderer {
+  display: none !important;
+}
+
+/* left panel and fixing the scroll and that thing keeps popping out window just adding a padding bottom to fix that automatic/natural way */
+
+/* out layer frame */
+tp-yt-app-drawer#guide.ytd-app {
+  background: transparent !important;
+  background-color: transparent !important;
+  z-index: 2147483647 !important;
+}
+
+/* resetting in layer and adding a padding bottom */
+#guide-content,
+#guide-content.ytd-app,
+#guide-inner-content,
+#sections,
+#sections.ytd-guide-renderer,
+#guide-renderer,
+#guide-renderer.ytd-app,
+ytd-guide-renderer,
+#items.ytd-guide-renderer,
+ytd-guide-section-renderer {
+  position: static !important;
+  width: 100% !important;
+  height: auto !important;
+  max-height: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border: none !important;
+  box-shadow: none !important;
+  box-sizing: border-box !important;
+}
+
+
+#guide-content {
+  min-height: 100% !important;
+  padding-bottom: 90px !important; 
+}
+
+#guide-content #header,
+tp-yt-app-drawer #header {
+  display: none !important;
+}
+
+#guide-content ytd-guide-entry-renderer,
+#guide-content ytd-guide-collapsible-entry-renderer {
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+
+body:not(:has(ytd-watch-flexy:not([hidden]))) tp-yt-app-drawer #contentContainer.style-scope.tp-yt-app-drawer {
+  position: fixed !important;
+  top: 76px !important;
+  left: 12px !important;
+  margin: 0 !important;
+  width: 240px !important;
+  height: calc(100vh - 88px) !important;
+  background: var(--glass-menu-bg) !important;
+  backdrop-filter: blur(var(--glass-blur)) !important;
+  -webkit-backdrop-filter: blur(var(--glass-blur)) !important;
+  border: var(--glass-border) !important;
+  border-radius: var(--glass-radius) !important;
+  box-shadow: var(--glass-shadow) !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  box-sizing: border-box !important;
+  padding: 8px !important;
+}
+
+/* hamburger menu for when u are watching video */
+body:has(ytd-watch-flexy:not([hidden])) tp-yt-app-drawer #contentContainer.style-scope.tp-yt-app-drawer {
+  background: var(--glass-menu-bg) !important;
+  backdrop-filter: blur(var(--glass-blur)) !important;
+  -webkit-backdrop-filter: blur(var(--glass-blur)) !important;
+  border-right: var(--glass-border) !important;
+  border-top-right-radius: var(--glass-radius) !important;
+  border-bottom-right-radius: var(--glass-radius) !important;
+  box-shadow: var(--glass-shadow) !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  box-sizing: border-box !important;
+  padding: 8px !important;
+  min-height: 100% !important;
+}
+
+body:has(ytd-watch-flexy:not([hidden])) tp-yt-app-drawer #scrim {
+  background: rgba(0, 0, 0, 0.3) !important;
+}
+
+/* scroll bar */
+tp-yt-app-drawer #contentContainer::-webkit-scrollbar,
+ytd-mini-guide-renderer::-webkit-scrollbar,
+#guide-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+tp-yt-app-drawer #contentContainer::-webkit-scrollbar-thumb,
+ytd-mini-guide-renderer::-webkit-scrollbar-thumb,
+#guide-content::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 6px;
+}
+
+/* layering masks */
+yt-contextual-sheet-layout.ytContextualSheetLayoutHost {
+  background: var(--glass-menu-bg) !important;
+  backdrop-filter: blur(var(--glass-blur-soft)) !important;
+  -webkit-backdrop-filter: blur(var(--glass-blur-soft)) !important;
+  border: var(--glass-border) !important;
+  border-radius: var(--glass-radius) !important;
+  box-shadow: var(--glass-shadow) !important;
+}
+
+yt-contextual-sheet-layout .ytContextualSheetLayoutHeaderContainer,
+yt-contextual-sheet-layout .ytContextualSheetLayoutContentContainer,
+yt-contextual-sheet-layout .ytContextualSheetLayoutFooterContainer,
+yt-contextual-sheet-layout yt-list-view-model,
+yt-contextual-sheet-layout yt-list-item-view-model,
+yt-contextual-sheet-layout .ytListItemViewModelLayoutWrapper {
+  background: transparent !important;
+}
+
+yt-contextual-sheet-layout .ytListItemViewModelLayoutWrapper:hover {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border-radius: var(--glass-radius-sm) !important;
+}
+
+tp-yt-iron-overlay-backdrop,
+#guide-content ~ tp-yt-iron-overlay-backdrop,
+ytd-app[guide-persistent-and-top-level-mini-guide-visible] tp-yt-iron-overlay-backdrop {
+  z-index: 1 !important;
+  background: transparent !important;
+}
