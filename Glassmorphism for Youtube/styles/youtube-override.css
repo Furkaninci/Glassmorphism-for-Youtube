@@ -21,6 +21,13 @@ html[dark] {
   --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.06);
 }
 
+html:not([dark]) {
+  --glass-masthead-bg: rgba(255, 255, 255, 0.55);
+}
+
+/* 
+   search box
+    */
 #search-form {
   background: var(--glass-bg) !important;
   backdrop-filter: blur(var(--glass-blur)) !important;
@@ -37,29 +44,20 @@ html[dark] {
   box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.25), var(--glass-shadow) !important;
 }
 
-#container.ytd-searchbox {
-  background: transparent !important;
-  border: none !important;
-  box-shadow: none !important;
-}
-
-input#search {
-  background: transparent !important;
-  color: inherit !important;
-  border: none !important;
-  outline: none !important;
-}
-
+#container.ytd-searchbox,
+input#search,
 #search-icon-legacy {
   background: transparent !important;
   border: none !important;
   box-shadow: none !important;
 }
 
-html:not([dark]) {
-  --glass-masthead-bg: rgba(255, 255, 255, 0.55);
+input#search {
+  color: inherit !important;
+  outline: none !important;
 }
 
+/* masthead */
 #masthead-container {
   background: var(--glass-masthead-bg) !important;
   backdrop-filter: blur(var(--glass-blur)) !important;
@@ -83,51 +81,17 @@ html:not([dark]) ytd-topbar-logo-renderer {
   ) !important;
 }
 
-#guide-content {
-  position: fixed !important;
-  top: 76px !important;
-  left: 12px !important;
-  width: 240px !important;
-  height: auto !important;
-  max-height: calc(100vh - 88px) !important;
-
-  background: var(--glass-menu-bg) !important;
-  backdrop-filter: blur(var(--glass-blur)) !important;
-  -webkit-backdrop-filter: blur(var(--glass-blur)) !important;
-  border: var(--glass-border) !important;
-  border-radius: var(--glass-radius) !important;
-  box-shadow: var(--glass-shadow) !important;
-
-  overflow-y: auto !important;
-  overflow-x: hidden !important;
-  padding: 8px !important;
-  box-sizing: border-box !important;
+/* page manager */
+ytd-page-manager#page-manager:not(:has(ytd-watch-flexy:not([hidden]))) { 
+  margin-left: 88px !important;
 }
 
-#guide-content ytd-guide-renderer,
-#guide-content #guide-inner-content,
-#guide-content tp-yt-app-drawer,
-#guide-content #sections {
-  width: 100% !important;
-  padding: 0 !important;
-  margin: 0 !important;
-  box-sizing: border-box !important;
+ytd-page-manager#page-manager:has(ytd-watch-flexy:not([hidden])),
+html:fullscreen ytd-page-manager#page-manager {
+  margin-left: 0 !important;
 }
 
-#guide-content {
-  z-index: 2147483647 !important;
-}
-
-#guide-content #header {
-  display: none !important;
-}
-
-#guide-content ytd-guide-entry-renderer,
-#guide-content ytd-guide-collapsible-entry-renderer {
-  width: 100% !important;
-  box-sizing: border-box !important;
-}
-
+/* mini guide */
 ytd-mini-guide-renderer {
   position: fixed !important;
   top: 76px !important;
@@ -145,29 +109,117 @@ ytd-mini-guide-renderer {
   z-index: 2147483647 !important;
 }
 
-ytd-page-manager#page-manager:not(:has(ytd-watch-flexy:not([hidden]))) { 
-  margin-left: 88px !important;
+tp-yt-app-drawer#guide[opened] ~ ytd-mini-guide-renderer {
+  display: none !important;
 }
 
-ytd-page-manager#page-manager:has(ytd-watch-flexy:not([hidden])) {
-  margin-left: 0 !important;
+/* left panel and fixing the scroll and that thing keeps popping out window just adding a padding bottom to fix that automatic/natural way */
+
+/* out layer frame */
+tp-yt-app-drawer#guide.ytd-app {
+  background: transparent !important;
+  background-color: transparent !important;
+  z-index: 2147483647 !important;
 }
 
-html:fullscreen ytd-page-manager#page-manager {
-  margin-left: 0 !important;
+/* resetting in layer and adding a padding bottom */
+#guide-content,
+#guide-content.ytd-app,
+#guide-inner-content,
+#sections,
+#sections.ytd-guide-renderer,
+#guide-renderer,
+#guide-renderer.ytd-app,
+ytd-guide-renderer,
+#items.ytd-guide-renderer,
+ytd-guide-section-renderer {
+  position: static !important;
+  width: 100% !important;
+  height: auto !important;
+  max-height: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border: none !important;
+  box-shadow: none !important;
+  box-sizing: border-box !important;
 }
 
-#guide-content::-webkit-scrollbar,
-ytd-mini-guide-renderer::-webkit-scrollbar {
+
+#guide-content {
+  min-height: 100% !important;
+  padding-bottom: 90px !important; 
+}
+
+#guide-content #header,
+tp-yt-app-drawer #header {
+  display: none !important;
+}
+
+#guide-content ytd-guide-entry-renderer,
+#guide-content ytd-guide-collapsible-entry-renderer {
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+
+body:not(:has(ytd-watch-flexy:not([hidden]))) tp-yt-app-drawer #contentContainer.style-scope.tp-yt-app-drawer {
+  position: fixed !important;
+  top: 76px !important;
+  left: 12px !important;
+  margin: 0 !important;
+  width: 240px !important;
+  height: calc(100vh - 88px) !important;
+  background: var(--glass-menu-bg) !important;
+  backdrop-filter: blur(var(--glass-blur)) !important;
+  -webkit-backdrop-filter: blur(var(--glass-blur)) !important;
+  border: var(--glass-border) !important;
+  border-radius: var(--glass-radius) !important;
+  box-shadow: var(--glass-shadow) !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  box-sizing: border-box !important;
+  padding: 8px !important;
+}
+
+/* hamburger menu for when u are watching video */
+body:has(ytd-watch-flexy:not([hidden])) tp-yt-app-drawer #contentContainer.style-scope.tp-yt-app-drawer {
+  background: var(--glass-menu-bg) !important;
+  backdrop-filter: blur(var(--glass-blur)) !important;
+  -webkit-backdrop-filter: blur(var(--glass-blur)) !important;
+  border-right: var(--glass-border) !important;
+  border-top-right-radius: var(--glass-radius) !important;
+  border-bottom-right-radius: var(--glass-radius) !important;
+  box-shadow: var(--glass-shadow) !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  box-sizing: border-box !important;
+  padding: 8px !important;
+  min-height: 100% !important;
+}
+
+body:has(ytd-watch-flexy:not([hidden])) tp-yt-app-drawer #scrim {
+  background: rgba(0, 0, 0, 0.3) !important;
+}
+
+/* scroll bar */
+tp-yt-app-drawer #contentContainer::-webkit-scrollbar,
+ytd-mini-guide-renderer::-webkit-scrollbar,
+#guide-content::-webkit-scrollbar {
   width: 6px;
 }
 
-#guide-content::-webkit-scrollbar-thumb,
-ytd-mini-guide-renderer::-webkit-scrollbar-thumb {
+tp-yt-app-drawer #contentContainer::-webkit-scrollbar-thumb,
+ytd-mini-guide-renderer::-webkit-scrollbar-thumb,
+#guide-content::-webkit-scrollbar-thumb {
   background: rgba(255, 255, 255, 0.2);
   border-radius: 6px;
 }
 
+/* layering masks */
 yt-contextual-sheet-layout.ytContextualSheetLayoutHost {
   background: var(--glass-menu-bg) !important;
   backdrop-filter: blur(var(--glass-blur-soft)) !important;
@@ -196,56 +248,4 @@ tp-yt-iron-overlay-backdrop,
 ytd-app[guide-persistent-and-top-level-mini-guide-visible] tp-yt-iron-overlay-backdrop {
   z-index: 1 !important;
   background: transparent !important;
-}
-
-tp-yt-app-drawer #guide-content.style-scope.ytd-app {
-  position: static !important;
-  top: auto !important;
-  left: auto !important;
-  bottom: auto !important;
-  width: 100% !important;
-  height: 100% !important;
-  max-height: none !important;
-  margin: 0 !important;
-}
-
-body:has(ytd-watch-flexy:not([hidden])) tp-yt-app-drawer #contentContainer.style-scope.tp-yt-app-drawer {
-  background: var(--glass-menu-bg) !important;
-  backdrop-filter: blur(var(--glass-blur)) !important;
-  -webkit-backdrop-filter: blur(var(--glass-blur)) !important;
-  border-right: var(--glass-border) !important;
-  border-top-right-radius: var(--glass-radius) !important;
-  border-bottom-right-radius: var(--glass-radius) !important;
-  overflow: hidden !important;
-  box-shadow: var(--glass-shadow) !important;
-}
-body:has(ytd-watch-flexy:not([hidden])) tp-yt-app-drawer #guide-content.style-scope.ytd-app {
-  border-radius: 0 !important;
-  box-shadow: none !important;
-}
-
-body:not(:has(ytd-watch-flexy:not([hidden]))) tp-yt-app-drawer #contentContainer.style-scope.tp-yt-app-drawer {
-  margin: 76px 0 12px 12px !important;
-  width: 240px !important;
-  height: calc(100% - 88px) !important;
-  background: var(--glass-menu-bg) !important;
-  backdrop-filter: blur(var(--glass-blur)) !important;
-  -webkit-backdrop-filter: blur(var(--glass-blur)) !important;
-  border: var(--glass-border) !important;
-  border-radius: var(--glass-radius) !important;
-  overflow: hidden !important;
-  box-shadow: var(--glass-shadow) !important;
-}
-
-tp-yt-app-drawer #guide-content #header,
-tp-yt-app-drawer #header {
-  display: none !important;
-}
-
-body:has(ytd-watch-flexy:not([hidden])) tp-yt-app-drawer #scrim {
-  background: rgba(0, 0, 0, 0.3) !important;
-}
- 
-tp-yt-app-drawer#guide[opened] ~ ytd-mini-guide-renderer {
-  display: none !important;
 }
