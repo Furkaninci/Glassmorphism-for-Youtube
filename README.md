@@ -2,7 +2,7 @@
 
 This project is a comprehensive CSS customization file (`youtube-override.css`) that transforms YouTube's standard interface into a modern **Glassmorphism** design language.
 
-## 🌟 Key Features
+##  Key Features
 
 * **Dynamic Glass Design:** Applies translucent backgrounds and background blur (`backdrop-filter: blur`) effects to the search bar, masthead, mini guide, and side panels.
 * **Theme Compatibility:** Provides seamless color transitions in both light mode and dark mode via the `html[dark]` selector.
@@ -10,7 +10,7 @@ This project is a comprehensive CSS customization file (`youtube-override.css`) 
 
 ---
 
-## 🛠️ Architecture and Structure
+##  Architecture and Structure
 
 ### 1. Search Bar and Masthead
 * `#search-form` and `#masthead-container` elements are styled with a transparent glass texture.
@@ -26,7 +26,7 @@ This project is a comprehensive CSS customization file (`youtube-override.css`) 
 
 ---
 
-## 🚀 Installation and Usage
+##  Installation and Usage
 
 1. Install an extension that allows user CSS injection in your browser (e.g., **Stylus**).
 2. Set `youtube.com` as the target site.
