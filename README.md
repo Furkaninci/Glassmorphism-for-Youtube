@@ -28,6 +28,9 @@ This project is a comprehensive CSS customization file (`youtube-override.css`) 
 
 ##  Installation and Usage
 
-1. Install an extension that allows user CSS injection in your browser (e.g., **Stylus**).
-2. Set `youtube.com` as the target site.
-3. Copy all the CSS codes from this repository into your extension panel or `youtube-override.css` file and save.
+1. Download the repository source code as a **ZIP** file from GitHub and extract it to a folder on your computer.
+2. Open your Chromium-based browser (Chrome, Edge, Brave, etc.) and navigate to the extensions page (`chrome://extensions/`).
+3. Enable **Developer mode** using the toggle switch usually located in the top-right corner.
+4. Click on the **Load unpacked** button (top-left).
+5. Select the extracted project folder.
+6. Enjoy your new modern glassmorphism YouTube interface!
