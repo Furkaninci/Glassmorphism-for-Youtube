@@ -304,3 +304,32 @@ html:not([dark]) #guide-content ytd-guide-section-renderer:nth-of-type(-n + 4) {
   background: rgba(255, 255, 255, 0.08) !important;
   border-radius: var(--glass-radius-sm) !important;
 }
+
+/* The glass border adds a few pixels of width, so the content overflows sideways.
+   We block horizontal overflow only; vertical scrolling stays available for long menus. */
+/* 3-dot menu: remove the useless horizontal scrollbar */
+
+yt-contextual-sheet-layout.ytContextualSheetLayoutHost,
+yt-contextual-sheet-layout .ytContextualSheetLayoutHeaderContainer,
+yt-contextual-sheet-layout .ytContextualSheetLayoutContentContainer,
+yt-contextual-sheet-layout .ytContextualSheetLayoutFooterContainer,
+yt-contextual-sheet-layout yt-list-view-model,
+yt-contextual-sheet-layout yt-sheet-view-model,
+ytd-menu-popup-renderer,
+ytd-menu-popup-renderer #items,
+tp-yt-iron-dropdown #contentWrapper,
+tp-yt-iron-dropdown tp-yt-paper-listbox {
+  overflow-x: hidden !important;
+  box-sizing: border-box !important;
+}
+ 
+/* in case the scrollbar still renders, hide only the horizontal one */
+yt-contextual-sheet-layout ::-webkit-scrollbar:horizontal,
+yt-contextual-sheet-layout::-webkit-scrollbar:horizontal,
+ytd-menu-popup-renderer ::-webkit-scrollbar:horizontal,
+ytd-menu-popup-renderer::-webkit-scrollbar:horizontal,
+tp-yt-iron-dropdown ::-webkit-scrollbar:horizontal,
+tp-yt-iron-dropdown::-webkit-scrollbar:horizontal {
+  display: none !important;
+  height: 0 !important;
+}
