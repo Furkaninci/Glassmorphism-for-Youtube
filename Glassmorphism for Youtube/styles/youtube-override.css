@@ -151,8 +151,8 @@ ytd-guide-section-renderer {
   padding-bottom: 90px !important; 
 }
 
-#guide-content #header,
-tp-yt-app-drawer #header {
+tp-yt-app-drawer #header ytd-topbar-logo-renderer,
+tp-yt-app-drawer #header yt-icon-button {
   display: none !important;
 }
 
