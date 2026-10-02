@@ -13,6 +13,14 @@ A Chrome extension that transforms the YouTube interface into a modern **glassmo
   - **Blur slider**: adjust the blur intensity from 0 to 50 px
   - **Left menu color**: pick any color for the sidebar glass
 
+## Screenshots
+
+The left menu with different blur settings:
+
+| Low blur | Medium blur | High blur |
+| :---: | :---: | :---: |
+| <img src="Screenshots/ss1.png" alt="Left menu with a low blur setting" width="250"> | <img src="Screenshots/ss2.png" alt="Left menu with a medium blur setting" width="250"> | <img src="Screenshots/ss3.png" alt="Left menu with a high blur setting" width="250"> |
+
 ## Installation
 
 The extension is not on the Chrome Web Store, so you load it manually:
