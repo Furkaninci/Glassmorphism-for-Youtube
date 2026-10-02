@@ -8,7 +8,7 @@
   --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.15);
   --glass-radius: 18px;
   --glass-radius-sm: 12px;
-  --glass-transition: all 0.25s ease-in-out;
+  --glass-transition: background-color 0.25s ease-in-out, box-shadow 0.25s ease-in-out;
   --glass-menu-bg: rgba(28, 28, 30, 0.55);
   --glass-masthead-bg: rgba(15, 15, 15, 0.45);
 }
@@ -28,8 +28,6 @@ html:not([dark]) {
 /* -search box- */
 #search-form {
   background: var(--glass-bg) !important;
-  backdrop-filter: blur(var(--glass-blur)) !important;
-  -webkit-backdrop-filter: blur(var(--glass-blur)) !important;
   border: var(--glass-border) !important;
   border-radius: var(--glass-radius) !important;
   box-shadow: var(--glass-shadow) !important;
@@ -56,16 +54,27 @@ input#search {
 }
 
 /* masthead */
+/* The glass sits on a pseudo-element, not on the container itself: an element with backdrop-filter
+   blocks the blur of its children, and the search suggestions dropdown lives inside the masthead. */
 #masthead-container {
-  background: var(--glass-masthead-bg) !important;
-  backdrop-filter: blur(var(--glass-blur)) !important;
-  -webkit-backdrop-filter: blur(var(--glass-blur)) !important;
+  background: transparent !important;
   border-bottom: var(--glass-border-soft) !important;
   box-shadow: var(--glass-shadow) !important;
+  isolation: isolate;
 }
 
-body:not(:has(ytd-watch-flexy:not([hidden]))) #masthead-container {
-  background: var(--glass-menu-bg) !important;
+#masthead-container::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: var(--glass-menu-bg);
+  backdrop-filter: blur(var(--glass-blur));
+}
+
+body:has(ytd-watch-flexy:not([hidden])) #masthead-container::before {
+  background: var(--glass-masthead-bg);
 }
 
 html:not([dark]) #masthead-container #start,
@@ -80,7 +89,7 @@ html:not([dark]) ytd-topbar-logo-renderer {
 }
 
 /* page manager */
-ytd-page-manager#page-manager:not(:has(ytd-watch-flexy:not([hidden]))) { 
+ytd-page-manager#page-manager {
   margin-left: 88px !important;
 }
 
@@ -98,7 +107,6 @@ ytd-mini-guide-renderer {
   max-height: calc(100vh - 88px) !important;
   background: var(--glass-menu-bg) !important;
   backdrop-filter: blur(var(--glass-blur-soft)) !important;
-  -webkit-backdrop-filter: blur(var(--glass-blur-soft)) !important;
   border: var(--glass-border) !important;
   border-radius: var(--glass-radius) !important;
   box-shadow: var(--glass-shadow) !important;
@@ -116,7 +124,6 @@ tp-yt-app-drawer#guide[opened] ~ ytd-mini-guide-renderer {
 /* out layer frame */
 tp-yt-app-drawer#guide.ytd-app {
   background: transparent !important;
-  background-color: transparent !important;
   z-index: 2147483647 !important;
 }
 
@@ -138,9 +145,7 @@ ytd-guide-section-renderer {
   margin: 0 !important;
   padding: 0 !important;
   background: transparent !important;
-  background-color: transparent !important;
   backdrop-filter: none !important;
-  -webkit-backdrop-filter: none !important;
   border: none !important;
   box-shadow: none !important;
   box-sizing: border-box !important;
@@ -148,7 +153,7 @@ ytd-guide-section-renderer {
 
 #guide-content {
   min-height: 100% !important;
-  padding-bottom: 90px !important; 
+  padding-bottom: 90px !important;
 }
 
 tp-yt-app-drawer #header ytd-topbar-logo-renderer,
@@ -171,7 +176,6 @@ body:not(:has(ytd-watch-flexy:not([hidden]))) tp-yt-app-drawer #contentContainer
   height: calc(100vh - 88px) !important;
   background: var(--glass-menu-bg) !important;
   backdrop-filter: blur(var(--glass-blur)) !important;
-  -webkit-backdrop-filter: blur(var(--glass-blur)) !important;
   border: var(--glass-border) !important;
   border-radius: var(--glass-radius) !important;
   box-shadow: var(--glass-shadow) !important;
@@ -185,7 +189,6 @@ body:not(:has(ytd-watch-flexy:not([hidden]))) tp-yt-app-drawer #contentContainer
 body:has(ytd-watch-flexy:not([hidden])) tp-yt-app-drawer #contentContainer.style-scope.tp-yt-app-drawer {
   background: var(--glass-menu-bg) !important;
   backdrop-filter: blur(var(--glass-blur)) !important;
-  -webkit-backdrop-filter: blur(var(--glass-blur)) !important;
   border-right: var(--glass-border) !important;
   border-top-right-radius: var(--glass-radius) !important;
   border-bottom-right-radius: var(--glass-radius) !important;
@@ -217,9 +220,10 @@ ytd-mini-guide-renderer::-webkit-scrollbar-thumb,
 
 /* layering masks */
 yt-contextual-sheet-layout.ytContextualSheetLayoutHost {
+  overflow-x: hidden !important;
+  box-sizing: border-box !important;
   background: var(--glass-menu-bg) !important;
   backdrop-filter: blur(var(--glass-blur-soft)) !important;
-  -webkit-backdrop-filter: blur(var(--glass-blur-soft)) !important;
   border: var(--glass-border) !important;
   border-radius: var(--glass-radius) !important;
   box-shadow: var(--glass-shadow) !important;
@@ -266,12 +270,9 @@ html:not([dark]) #guide-content ytd-guide-section-renderer:nth-of-type(-n + 4) {
    so the blur slider and the menu color picker in the popup control this menu too. */
 
 /* outer frame: the only layer that gets the blur */
-.html5-video-player .ytp-popup.ytp-contextmenu,
 .ytp-popup.ytp-contextmenu {
   background: var(--glass-menu-bg) !important;
-  background-color: var(--glass-menu-bg) !important;
   backdrop-filter: blur(var(--glass-blur)) !important;
-  -webkit-backdrop-filter: blur(var(--glass-blur)) !important;
   border: var(--glass-border) !important;
   border-radius: var(--glass-radius) !important;
   box-shadow: var(--glass-shadow) !important;
@@ -283,9 +284,7 @@ html:not([dark]) #guide-content ytd-guide-section-renderer:nth-of-type(-n + 4) {
 .ytp-popup.ytp-contextmenu .ytp-panel-menu,
 .ytp-popup.ytp-contextmenu .ytp-menuitem {
   background: transparent !important;
-  background-color: transparent !important;
   backdrop-filter: none !important;
-  -webkit-backdrop-filter: none !important;
   box-shadow: none !important;
 }
 
@@ -309,7 +308,6 @@ html:not([dark]) #guide-content ytd-guide-section-renderer:nth-of-type(-n + 4) {
    We block horizontal overflow only; vertical scrolling stays available for long menus. */
 /* 3-dot menu: remove the useless horizontal scrollbar */
 
-yt-contextual-sheet-layout.ytContextualSheetLayoutHost,
 yt-contextual-sheet-layout .ytContextualSheetLayoutHeaderContainer,
 yt-contextual-sheet-layout .ytContextualSheetLayoutContentContainer,
 yt-contextual-sheet-layout .ytContextualSheetLayoutFooterContainer,
@@ -322,7 +320,7 @@ tp-yt-iron-dropdown tp-yt-paper-listbox {
   overflow-x: hidden !important;
   box-sizing: border-box !important;
 }
- 
+
 /* in case the scrollbar still renders, hide only the horizontal one */
 yt-contextual-sheet-layout ::-webkit-scrollbar:horizontal,
 yt-contextual-sheet-layout::-webkit-scrollbar:horizontal,
@@ -332,4 +330,178 @@ tp-yt-iron-dropdown ::-webkit-scrollbar:horizontal,
 tp-yt-iron-dropdown::-webkit-scrollbar:horizontal {
   display: none !important;
   height: 0 !important;
+}
+
+/* ===== Notifications panel (bell icon) ===== */
+/* Same glass variables as the left menu: blur slider and menu color picker control this panel too.
+   Note: the account (avatar) menu uses the same YouTube component, so it gets the same look. */
+
+/* outer frame: the only layer that gets the blur */
+ytd-multi-page-menu-renderer {
+  background: var(--glass-menu-bg) !important;
+  backdrop-filter: blur(var(--glass-blur)) !important;
+  border: var(--glass-border) !important;
+  border-radius: var(--glass-radius) !important;
+  box-shadow: var(--glass-shadow) !important;
+  overflow-x: hidden !important;
+  box-sizing: border-box !important;
+}
+
+/* inner layers must be transparent, otherwise they cover the glass */
+ytd-multi-page-menu-renderer #container,
+ytd-multi-page-menu-renderer #header,
+ytd-multi-page-menu-renderer #sections,
+ytd-multi-page-menu-renderer ytd-simple-menu-header-renderer,
+ytd-multi-page-menu-renderer ytd-section-list-renderer,
+ytd-multi-page-menu-renderer ytd-item-section-renderer,
+ytd-multi-page-menu-renderer ytd-notification-renderer,
+ytd-multi-page-menu-renderer ytd-compact-link-renderer {
+  background: transparent !important;
+  backdrop-filter: none !important;
+  box-shadow: none !important;
+}
+
+/* hover: same effect as the other glass menus */
+ytd-multi-page-menu-renderer ytd-notification-renderer:hover,
+ytd-multi-page-menu-renderer ytd-compact-link-renderer:hover {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border-radius: var(--glass-radius-sm) !important;
+}
+
+/* ===== Comments panel: remove the useless scrollbars ===== */
+/* Same logic as the 3-dot menu fix: block sideways overflow (the glass border adds a few pixels of width),
+   hide the horizontal bar, and make the vertical bar thin like the left menu. Scrolling still works. */
+
+ytd-engagement-panel-section-list-renderer,
+ytd-engagement-panel-section-list-renderer #content,
+ytd-engagement-panel-section-list-renderer #contents,
+ytd-engagement-panel-section-list-renderer ytd-section-list-renderer,
+ytd-engagement-panel-section-list-renderer ytd-item-section-renderer,
+#anchored-panel,
+ytd-comments,
+ytd-comments #sections,
+ytd-comments #contents {
+  overflow-x: clip !important;
+  box-sizing: border-box !important;
+}
+
+/* width = vertical bar thickness, height = horizontal bar (0 means hidden) */
+:is(ytd-engagement-panel-section-list-renderer, #anchored-panel, ytd-comments, yt-contextual-sheet-layout)::-webkit-scrollbar,
+:is(ytd-engagement-panel-section-list-renderer, #anchored-panel, ytd-comments, yt-contextual-sheet-layout) *::-webkit-scrollbar {
+  width: 6px !important;
+  height: 0 !important;
+}
+
+:is(ytd-engagement-panel-section-list-renderer, #anchored-panel, ytd-comments, yt-contextual-sheet-layout)::-webkit-scrollbar-thumb,
+:is(ytd-engagement-panel-section-list-renderer, #anchored-panel, ytd-comments, yt-contextual-sheet-layout) *::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2) !important;
+  border-radius: 6px !important;
+}
+
+:is(ytd-engagement-panel-section-list-renderer, #anchored-panel, ytd-comments, yt-contextual-sheet-layout)::-webkit-scrollbar-track,
+:is(ytd-engagement-panel-section-list-renderer, #anchored-panel, ytd-comments, yt-contextual-sheet-layout) *::-webkit-scrollbar-track,
+:is(ytd-engagement-panel-section-list-renderer, #anchored-panel, ytd-comments, yt-contextual-sheet-layout) *::-webkit-scrollbar-corner {
+  background: transparent !important;
+}
+
+/* remove the arrow buttons at the ends of the bars */
+:is(ytd-engagement-panel-section-list-renderer, #anchored-panel, ytd-comments, yt-contextual-sheet-layout) *::-webkit-scrollbar-button {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+/* ===== Notifications panel and its comments view: no scrollbars at all ===== */
+/* The comments view opened from a notification lives inside ytd-multi-page-menu-renderer.
+   Both bars are hidden; scrolling still works with the mouse wheel / touchpad / touch. */
+
+ytd-multi-page-menu-renderer,
+ytd-multi-page-menu-renderer *,
+tp-yt-iron-dropdown:has(ytd-multi-page-menu-renderer),
+tp-yt-iron-dropdown:has(ytd-multi-page-menu-renderer) #contentWrapper,
+tp-yt-iron-dropdown:has(ytd-multi-page-menu-renderer) #contentWrapper > * {
+  scrollbar-width: none !important;
+}
+
+ytd-multi-page-menu-renderer::-webkit-scrollbar,
+ytd-multi-page-menu-renderer *::-webkit-scrollbar,
+tp-yt-iron-dropdown:has(ytd-multi-page-menu-renderer)::-webkit-scrollbar,
+tp-yt-iron-dropdown:has(ytd-multi-page-menu-renderer) #contentWrapper::-webkit-scrollbar,
+tp-yt-iron-dropdown:has(ytd-multi-page-menu-renderer) #contentWrapper > *::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  background: transparent !important;
+}
+
+/* no sideways overflow inside this panel either */
+ytd-multi-page-menu-renderer #container,
+ytd-multi-page-menu-renderer #sections,
+ytd-multi-page-menu-renderer ytd-section-list-renderer,
+ytd-multi-page-menu-renderer ytd-item-section-renderer,
+ytd-multi-page-menu-renderer ytd-comments {
+  overflow-x: clip !important;
+}
+
+/* ===== Notifications panel: keep only ONE glass layer ===== */
+/* The outer ytd-multi-page-menu-renderer is already glass. Any panel/sheet opened inside it
+   (like the comments view) must stay transparent and must not add its own blur, border or tint,
+   otherwise the layers stack up and the background gets darker and more saturated. */
+
+ytd-multi-page-menu-renderer * {
+  backdrop-filter: none !important;
+}
+
+ytd-multi-page-menu-renderer yt-contextual-sheet-layout.ytContextualSheetLayoutHost,
+ytd-multi-page-menu-renderer yt-contextual-sheet-layout,
+ytd-multi-page-menu-renderer ytd-engagement-panel-section-list-renderer,
+ytd-multi-page-menu-renderer ytd-engagement-panel-title-header-renderer,
+ytd-multi-page-menu-renderer ytd-comments,
+ytd-multi-page-menu-renderer ytd-comments-header-renderer,
+ytd-multi-page-menu-renderer ytd-comment-thread-renderer,
+ytd-multi-page-menu-renderer ytd-comment-view-model,
+ytd-multi-page-menu-renderer ytd-comment-renderer,
+ytd-multi-page-menu-renderer ytd-comment-replies-renderer,
+ytd-multi-page-menu-renderer ytd-section-list-renderer,
+ytd-multi-page-menu-renderer ytd-item-section-renderer,
+ytd-multi-page-menu-renderer #contents,
+ytd-multi-page-menu-renderer #content {
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+/* a nested sheet must not draw its own frame inside the panel */
+ytd-multi-page-menu-renderer yt-contextual-sheet-layout.ytContextualSheetLayoutHost,
+ytd-multi-page-menu-renderer yt-contextual-sheet-layout {
+  border: none !important;
+  border-radius: 0 !important;
+}
+
+/* ===== Search suggestions dropdown (search history) ===== */
+/* Same glass variables as the left menu: blur slider and menu color picker control it too. */
+
+/* outer frame of the dropdown: the only layer that gets the blur */
+.ytSearchboxComponentSuggestionsContainer {
+  background: var(--glass-menu-bg) !important;
+  backdrop-filter: blur(var(--glass-blur)) !important;
+  border: var(--glass-border) !important;
+  border-radius: var(--glass-radius) !important;
+  box-shadow: var(--glass-shadow) !important;
+  overflow-x: hidden !important;
+  box-sizing: border-box !important;
+}
+
+/* everything inside must be transparent, only the color is cleared so thumbnails stay */
+.ytSearchboxComponentSuggestionsContainer * {
+  background-color: transparent !important;
+  backdrop-filter: none !important;
+  box-shadow: none !important;
+}
+
+/* hover and keyboard selection: same effect as the other glass menus */
+.ytSearchboxComponentSuggestionsContainer [role="option"]:hover,
+.ytSearchboxComponentSuggestionsContainer [aria-selected="true"],
+.ytSearchboxComponentSuggestionsContainer .ytSuggestionComponentSuggestion:hover {
+  background-color: rgba(255, 255, 255, 0.08) !important;
+  border-radius: var(--glass-radius-sm) !important;
 }
