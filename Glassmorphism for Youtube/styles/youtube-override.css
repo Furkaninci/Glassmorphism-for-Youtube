@@ -193,7 +193,7 @@ body:has(ytd-watch-flexy:not([hidden])) tp-yt-app-drawer #contentContainer.style
   overflow-y: auto !important;
   overflow-x: hidden !important;
   box-sizing: border-box !important;
-  padding: 8px !important;
+  padding: 76px 8px 8px 8px !important;
   min-height: 100% !important;
 }
 
